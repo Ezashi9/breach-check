@@ -50,6 +50,17 @@ Attackers start with exactly these lists. When Log Hunter analysed real SSH atta
 
 **The Python tool** never accepts a password as a command-line argument, because those are saved in shell history and visible to other users through the process list. It asks with a hidden prompt instead.
 
+## Security scan findings (CodeQL)
+
+GitHub's CodeQL code scanner raised 4 high-severity alerts on the first scan. I triaged each one instead of switching the scanner off:
+
+| Alert | Verdict | What I did |
+|---|---|---|
+| "SHA-1 is too weak for password hashing" (×3: tool, Python test, JS test) | **False positive in this context** | CodeQL assumes the hash is being *stored* to protect passwords at rest, where SHA-1 would be a real flaw because it's fast to crack. Here SHA-1 is required by Have I Been Pwned's protocol and is only used as a **lookup key**; the full hash never leaves the device and is never stored. Dismissed with this reasoning. |
+| "Password printed in clear text" (`--file` mode) | **Real weakness, fixed** | The old "masked" output (`pa*********`) still revealed the first 2 characters, which narrows down a password. It now shows only the line number and length (`line 3 (11 characters)`). Passwords are printed only if you explicitly ask with `--show`. |
+
+The lesson: scanners are a starting point, not a verdict. Every alert needs a human decision with a reason.
+
 ## Usage
 
 **Web:** open https://ezashi9.github.io/breach-check/, or serve `docs/` locally (`cd docs && python -m http.server`) and open `http://localhost:8000`.
@@ -58,7 +69,7 @@ Attackers start with exactly these lists. When Log Hunter analysed real SSH atta
 
 ```bash
 python -m breach_check                       # hidden prompt for one password
-python -m breach_check --file passwords.txt  # check a list (masked output; add --show to reveal)
+python -m breach_check --file passwords.txt  # check a list (shows line numbers only; add --show to print the passwords)
 ```
 
 `--file` is designed for the next part of Home SOC: checking the passwords attackers try against a honeypot.
