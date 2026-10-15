@@ -1,5 +1,7 @@
 # Breach Check
 
+[![Tests](https://github.com/Ezashi9/breach-check/actions/workflows/ci.yml/badge.svg)](https://github.com/Ezashi9/breach-check/actions/workflows/ci.yml)
+
 **Try it: https://ezashi9.github.io/breach-check/**
 
 Checks whether a password has appeared in a real data breach, using the [Pwned Passwords](https://haveibeenpwned.com/Passwords) database from Have I Been Pwned (over a billion leaked passwords), **without ever sending the password anywhere**.
