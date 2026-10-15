@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.pwnedpasswords.com; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Breach Check</title>
+  <meta name="description" content="Check whether a password has appeared in a data breach, without sending the password anywhere.">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Breach Check</p>
+      <h1>Has this password been leaked?</h1>
+      <p class="lede">Checks your password against over a billion passwords exposed in real data breaches. <strong>Your password never leaves this page.</strong></p>
+    </header>
+
+    <section class="card">
+      <form id="form" autocomplete="off">
+        <label for="password">Password</label>
+        <div class="field">
+          <input id="password" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+          <button type="button" id="toggle" class="ghost" aria-pressed="false" aria-controls="password">Show</button>
+        </div>
+        <button type="submit" id="submit">Check password</button>
+      </form>
+
+      <div id="result" class="result" role="status" aria-live="polite" hidden>
+        <p class="verdict" id="verdict"></p>
+        <p class="advice" id="advice"></p>
+      </div>
+    </section>
+
+    <section class="card" id="steps" hidden>
+      <h2>What just happened</h2>
+      <ol class="steps">
+        <li>
+          <p class="step-title">Your password was turned into a fingerprint on this device</p>
+          <p>A SHA-1 hash: 40 characters that can't be directly reversed. (Hashes of common passwords <em>can</em> be looked up in precomputed tables, which is why the full hash is never sent either.)</p>
+        </li>
+        <li>
+          <p class="step-title">Only the first 5 characters were sent: <code id="step-prefix"></code></p>
+          <p>The other <span id="step-kept"></span> never left your browser. Thousands of different passwords share these first 5 characters, so they don't identify yours.</p>
+        </li>
+        <li>
+          <p class="step-title">The service replied with <span id="step-returned"></span> hashes</p>
+          <p>Every leaked hash starting with those 5 characters, plus <span id="step-decoys"></span> fake ones mixed in so the size of the reply gives nothing away.</p>
+        </li>
+        <li>
+          <p class="step-title">Your browser searched that list itself: <span id="step-count"></span></p>
+          <p>The service never learns which hash you were looking for, or whether there was a match. This technique is called <strong>k-anonymity</strong>.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>Why you can trust this page</h2>
+      <ul class="trust">
+        <li>Nothing is stored, logged or tracked. No cookies, no analytics.</li>
+        <li>The page's security policy only allows it to contact one server, <code>api.pwnedpasswords.com</code>, and the form can't be submitted anywhere.</li>
+        <li>All the code is public: <a href="https://github.com/Ezashi9/breach-check">github.com/Ezashi9/breach-check</a>.</li>
+      </ul>
+      <p class="note">Even so, the safest habit is never typing a real password into a site you don't control. Try it with example passwords like <code>password123</code> or <code>letmein</code>.</p>
+    </section>
+
+    <footer class="footer">
+      <p>Password data: <a href="https://haveibeenpwned.com/Passwords">Pwned Passwords</a> by Troy Hunt (Have I Been Pwned), CC BY 4.0.</p>
+      <p>Built by Eisa Chaudry as part of the <a href="https://github.com/Ezashi9/home-soc-dashboard">Home SOC</a> project.</p>
+    </footer>
+  </main>
+</body>
+</html>

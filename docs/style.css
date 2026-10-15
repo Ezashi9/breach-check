@@ -1,0 +1,111 @@
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --line: #e1e0d9;
+  --border: rgba(11, 11, 11, 0.10);
+  --accent: #2a78d6;
+  --accent-hover: #256abf;
+  --on-accent: #ffffff;
+  --link: #1c5cab;
+  --good: #0ca30c;
+  --good-text: #006300;
+  --bad: #d03b3b;
+  --bad-text: #b02a2a;
+  --wash: #f0efec;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --line: #2c2c2a;
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #3987e5;
+    --accent-hover: #5598e7;
+    --on-accent: #0b0b0b;
+    --link: #86b6ef;
+    --good-text: #0ca30c;
+    --bad-text: #e66767;
+    --wash: #232322;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --line: #2c2c2a;
+  --border: rgba(255, 255, 255, 0.10);
+  --accent: #3987e5;
+  --accent-hover: #5598e7;
+  --on-accent: #0b0b0b;
+  --link: #86b6ef;
+  --good-text: #0ca30c;
+  --bad-text: #e66767;
+  --wash: #232322;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--text-primary); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+a { color: var(--link); }
+code { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-size: 0.92em; padding: 1px 6px; border-radius: 4px; background: var(--wash); }
+
+.page { max-width: 680px; margin: 0 auto; padding: 40px 16px 48px; display: grid; gap: 16px; }
+.eyebrow { margin: 0 0 4px; color: var(--text-muted); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+h1 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 650; }
+h2 { margin: 0 0 12px; font-size: 17px; font-weight: 600; }
+.lede { margin: 8px 0 0; color: var(--text-secondary); }
+.lede strong { color: var(--text-primary); }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+
+label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+.field { display: flex; gap: 8px; margin-bottom: 12px; }
+input {
+  flex: 1; min-width: 0; font: inherit; padding: 10px 12px; color: var(--text-primary);
+  background: var(--page); border: 1px solid var(--line); border-radius: 8px;
+}
+input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button {
+  font: inherit; font-weight: 600; padding: 10px 18px; border-radius: 8px; border: 1px solid transparent;
+  background: var(--accent); color: var(--on-accent); cursor: pointer;
+}
+button:hover { background: var(--accent-hover); }
+button:disabled { opacity: 0.6; cursor: progress; }
+button.ghost { background: transparent; color: var(--text-secondary); border-color: var(--line); font-weight: 500; }
+button.ghost:hover { background: var(--wash); }
+
+.result { margin-top: 16px; padding: 14px 16px; border-radius: 8px; background: var(--wash); border-left: 4px solid var(--text-muted); }
+.result-bad { border-left-color: var(--bad); }
+.result-good { border-left-color: var(--good); }
+.verdict { margin: 0; font-size: 18px; font-weight: 650; display: flex; align-items: flex-start; gap: 8px; }
+.verdict::before { content: ""; flex: none; width: 10px; height: 10px; margin-top: 0.6em; border-radius: 50%; background: var(--text-muted); }
+.result-bad .verdict { color: var(--bad-text); }
+.result-bad .verdict::before { background: var(--bad); }
+.result-good .verdict { color: var(--good-text); }
+.result-good .verdict::before { background: var(--good); }
+.advice { margin: 4px 0 0; color: var(--text-secondary); }
+
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 12px; }
+.steps p { margin: 0; color: var(--text-secondary); font-size: 15px; }
+.steps .step-title { color: var(--text-primary); font-weight: 600; }
+.trust { margin: 0 0 12px; padding-left: 20px; color: var(--text-secondary); }
+.note { margin: 0; color: var(--text-secondary); font-size: 14px; }
+
+.footer { color: var(--text-muted); font-size: 13px; }
+.footer p { margin: 4px 0; }
+
+@media (max-width: 480px) {
+  h1 { font-size: 26px; }
+  .card { padding: 16px; }
+}
